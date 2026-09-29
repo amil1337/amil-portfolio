@@ -649,6 +649,13 @@ a:hover {
   align-self: flex-start;
 }
 
+/* Keep blog action buttons the same height as the other pill buttons. */
+.blog-card-full .button1 {
+  min-height: 49px;
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}
+
 .blog-meta {
   display: flex;
   justify-content: space-between;
@@ -959,6 +966,7 @@ nav a[data-tooltip]:hover::before {
   .hero-buttons {
     flex-direction: column;
     gap: var(--space-xs);
+    align-items: center;
   }
 
   .btn {
@@ -991,15 +999,38 @@ nav a[data-tooltip]:hover::before {
     grid-template-columns: 1fr;
     max-width: 320px;
   }
+
+  .project-details,
+  .blog-card-full {
+    text-align: center;
+    align-items: center;
+  }
+
+  .project-details h3,
+  .project-details p,
+  .blog-card-full h3,
+  .blog-card-full p {
+    text-align: center !important;
+  }
+
+  .project-tech,
+  .project-links {
+    justify-content: center;
+  }
+
+  .blog-details .button1,
+  .project-links .button1 {
+    align-self: center;
+    justify-content: center;
+    text-align: center;
+  }
 }
 
-/* Statik düymə (animasiyasız və tək ikon üçün) */
 .button1--static:hover .button1__icon-svg {
   transform: none !important;
   transition: none !important;
 }
 
-/* Tam uzunluqda Bloq Kartları üçün */
 .blog-list-container {
   display: flex;
   flex-direction: column;

@@ -21,8 +21,8 @@ const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf
       <div class="blog-list-container">
         {sortedPosts.map((post) => (
           <div class="blog-card-full">
-            <h3 style="text-align: left; margin-bottom: 0.5rem;">{post.frontmatter.title}</h3>
-            <p style="text-align: left;">{post.frontmatter.description}</p>
+            <h3 style="margin-bottom: 0.5rem;">{post.frontmatter.title}</h3>
+            <p>{post.frontmatter.description}</p>
             
             <div class="project-tech" style="margin-top: 1rem;">
               <span>{post.frontmatter.category}</span>
