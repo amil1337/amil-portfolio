@@ -1,0 +1,182 @@
+---
+// src/pages/index.astro
+import MainLayout from '../layouts/MainLayout.astro';
+
+// Bloqları oxumaq (əvvəlki kod)
+const allPosts = Object.values(import.meta.glob('./blog/*.md', { eager: true })) as any[];
+const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+const recentPosts = sortedPosts.slice(0, 3);
+
+// Layihələri oxumaq (YENİ)
+const allProjects = Object.values(import.meta.glob('../projects/*.md', { eager: true })) as any[];
+const sortedProjects = allProjects.sort((a, b) => a.frontmatter.order - b.frontmatter.order);
+const featuredProjects = sortedProjects.slice(0, 2); // Ana səhifədə yalnız ilk 2-si görünsün
+---
+
+<MainLayout title="Amil's Portfolio">
+  <!-- Hero Section (sizin köhnə kodunuz) -->
+  <section id="hero" class="section hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Hi, I'm <span class="highlight">Amil Ibrahimli</span></h1>
+          <h2>Backend Developer & CS Student</h2>
+          
+          <div class="hero-buttons">
+            <a href="#projects" class="button1">
+              <span class="button1__icon-wrapper">
+                <svg viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="button1__icon-svg" width="10"><path d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z" fill="currentColor"></path></svg>
+                <svg viewBox="0 0 14 15" fill="none" width="10" xmlns="http://www.w3.org/2000/svg" class="button1__icon-svg button1__icon-svg--copy"><path d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z" fill="currentColor"></path></svg>
+              </span>
+              View My Work
+            </a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="profile-image-container">
+            <div class="profile-image">
+              <img src="/images/3x4.jpg" alt="Amil Ibrahimli" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section (qısaltdım, sizin tam kodunuz bura gələcək) -->
+  <section id="about" class="section about-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>About Me</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="about-content">
+        <div class="about-text">
+          <p>
+            Hi, I'm Amil. I am from Azerbaijan, Baku city. Right now I'm in the second year of my studies at Bilkent University, Computer Engineering department.
+            Before coming to Bilkent, I gained real-world coding experience with Frontend Development. With just HTML, CSS, and JavaScript I've built several websites and sold them to customers.
+            I think that it's important to mention that AI helped me a lot on building these projects because without it planning all stuff such as finding a suitable design, customizing it, communicating with the customer 
+            to make it personalized, coding, testing, and deploying would be nightmare. But I should also mention that I don't like vibecoding (see: <a target="_blank" href="https://github.com/resources/articles/what-is-vibe-coding" style="color: #007AFF; text-decoration: underline;">vibe-coding</a>) as I believe it prevents us from actually learning the process.
+            However, I like getting assistance from AI but writing the code manually. Below, you can find some of my projects.
+          </p>
+          <p>
+            Here, at Bilkent, in <a target="_blank" href="https://catalog.bilkent.edu.tr/course/c11101.html" style="color: #007AFF; text-decoration: underline;">CS101</a> and <a target="_blank" href="https://catalog.bilkent.edu.tr/course/c11102.html" style="color: #007AFF; text-decoration: underline;">CS102</a>
+            I had the chance of learning Java Core, OOP Principles, Exception Handling, GUI, Multithreading, etc. By the end of the semester we even built a project to demonstrate our skills. Below you will find that project too. Though I still haven't chosen my final career path yet, I believe that learning the Backend could be a good starting point to understand the system and then delve into the other fields of Computer Science.
+            That's why I'm learning Spring Boot right now to be more autonomous on writing Backend apps. At the end of the year, I should have completed a summer internship (see: <a target="_blank" href="https://catalog.bilkent.edu.tr/course/c11299.html" style="color: #007AFF; text-decoration: underline;">CS299</a>) in a role that aligns with my degree. I plan to go with Backend Development roles, especially the ones where I can practice and improve my Spring Boot skills.
+          </p>
+          <p>
+            Outside of the classes, I like to touch some grass (literally). I ride my bicycle regularly, except for the days when I get a flat tire from a thorn, and when it happens, fixing it also gives me stimulation and is kind of hobby to take care of my bike. And I go to the gym, except for the days I'm sick. I also used to pet 10 stray cats in Baku, our own home. As you can predict from the previous sentence, 
+            I like interacting with animals and I had even volunteered at Baku Zoo before coming to the college for a month. Feel free to reach out me from navbar if you want to chat about programming, hackatons, startups, or just want to swap pictures of stray cats!
+          </p>
+          <div class="skills-container">
+            <h3>Skills & Technologies</h3>
+            <ul class="skills-list">
+              <li>Java</li><li>C++</li><li>OOP</li><li>Multithreading</li>
+              <li>Exception Handling</li><li>SQL</li><li>MySQL</li><li>Git</li>
+              <li>GitHub</li><li>HTML</li><li>CSS</li><li>Bootstrap</li>
+              <li>Tailwind CSS</li><li>JavaScript</li><li>Responsive Layout</li>
+              <li>UI/UX Design</li><li>Figma</li><li>Canva</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="section projects-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Featured Projects</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="projects-grid">
+        {featuredProjects.map((project) => (
+          <div class="project-card">
+            <div class="project-image">
+              <img src={project.frontmatter.image} alt={project.frontmatter.title} />
+            </div>
+            <div class="project-details">
+              <h3>{project.frontmatter.title}</h3>
+              <p>{project.frontmatter.description}</p>
+              <div class="project-tech">
+                {project.frontmatter.tech.map((t: string) => (
+                  <span>{t}</span>
+                ))}
+              </div>
+              <div class="project-links">
+                <a href={project.frontmatter.github} class="button1 button1--static" target="_blank">
+                  <span class="button1__icon-wrapper">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button1__icon-svg" width="13" height="13">
+                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    </svg>
+                  </span>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="view-more" style="margin-top: 2rem;">
+        <a href="/projects" class="button1">
+          <span class="button1__icon-wrapper">
+            <svg viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="button1__icon-svg" width="10">
+              <path d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z" fill="currentColor"></path>
+            </svg>
+            <svg viewBox="0 0 14 15" fill="none" width="10" xmlns="http://www.w3.org/2000/svg" class="button1__icon-svg button1__icon-svg--copy">
+              <path d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z" fill="currentColor"></path>
+            </svg>
+          </span>
+          View All Projects
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Avtomatik Bloq Bölməsi -->
+  <section id="recent-blogs" class="section about-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Recent blog</h2>
+        <div class="section-divider"></div>
+      </div>
+      
+      <div style="margin-top: 64px;" class="blog-list-container">
+        {recentPosts.map((post) => (
+          <div class="blog-card-full">
+            <h3 style="text-align: left; margin-bottom: 0.5rem;">{post.frontmatter.title}</h3>
+            <p style="text-align: left;">{post.frontmatter.description}</p>
+            <div class="project-tech" style="margin-top: 1rem;">
+              <span>{post.frontmatter.category}</span>
+              <span>{new Date(post.frontmatter.date).toLocaleDateString('az-AZ')}</span>
+            </div>
+            <div class="project-links">
+              <a href={post.url} class="button1 button1--static" style="padding: 0.5rem 1rem;">
+                <span class="button1__icon-wrapper" style="width: 20px; height: 20px;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button1__icon-svg" width="10" height="10">
+                    <line x1="21" y1="6" x2="3" y2="6"></line>
+                    <line x1="15" y1="12" x2="3" y2="12"></line>
+                    <line x1="17" y1="18" x2="3" y2="18"></line>
+                  </svg>
+                </span>
+                Read Article
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      <div class="view-more" style="margin-top: 2rem; margin-bottom: 4rem;">
+        <a href="/blog" class="button1">
+          <span class="button1__icon-wrapper">
+             <svg viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg" class="button1__icon-svg" width="10"><path d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z" fill="currentColor"></path></svg>
+             <svg viewBox="0 0 14 15" fill="none" width="10" xmlns="http://www.w3.org/2000/svg" class="button1__icon-svg button1__icon-svg--copy"><path d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z" fill="currentColor"></path></svg>
+          </span>
+          View All Blogs
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>

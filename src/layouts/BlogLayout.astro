@@ -1,0 +1,43 @@
+---
+// src/layouts/BlogLayout.astro
+import MainLayout from './MainLayout.astro';
+const { frontmatter } = Astro.props;
+---
+
+<MainLayout title={frontmatter.title}>
+  <article class="section" style="padding-bottom: 150px;">
+    <div class="container" style="max-width: 800px; margin: 0 auto;">
+      
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">{frontmatter.title}</h1>
+        <p style="color: var(--color-text-muted);">
+          Published: {new Date(frontmatter.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </p>
+      </div>
+
+      <img src={frontmatter.image} alt={frontmatter.title} style="width: 100%; border-radius: 12px; margin-bottom: 3rem;" />
+
+      <!-- Markdown-dan gələn mətn burada avtomatik formatlanacaq -->
+      <div class="blog-content">
+        <slot />
+      </div>
+      
+    </div>
+  </article>
+</MainLayout>
+
+<!-- Bloq daxilindəki mətnlərin (h2, p, ul) dizaynı -->
+<style is:global>
+<style is:global>
+  .blog-content h2 { margin-top: 2rem; margin-bottom: 1rem; font-size: 1.8rem;}
+  .blog-content p { margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8; color: var(--color-text);}
+  
+  /* Cümlə içindəki kiçik kodlar üçün */
+  .blog-content code { background: var(--color-bg-alt); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace;}
+  
+  /* Böyük qara kod blokları üçün */
+  .blog-content pre { padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem;}
+  
+  /* Qara blokun içindəki kodların arxafonunu şəffaflaşdırırıq ki, xəta olmasın */
+  .blog-content pre code { background: transparent; padding: 0; color: inherit; }
+</style>

@@ -1,0 +1,65 @@
+---
+// src/layouts/MainLayout.astro
+const { title = "Amil's Portfolio" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css" />
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-straight/css/uicons-regular-straight.css" />
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-brands/css/uicons-brands.css" />
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-chubby/css/uicons-regular-chubby.css" />
+  </head>
+  <body>
+    
+    <main>
+        <!-- Burada səhifələrin xüsusi məzmunu göstəriləcək -->
+        <slot /> 
+    </main>
+
+    <header>
+      <div class="nav-bg">
+        <nav>
+          <div class="container">
+            <ul class="nav-links">
+              <li>
+                <a href="/" data-tooltip="Home"><i class="fi fi-rr-home"></i></a>
+              </li>
+              <li>
+                <a href="/projects" data-tooltip="Projects"><i class="fi fi-rr-diagram-project"></i></a>
+              </li>
+              <li>
+                <a href="/blog" data-tooltip="Blog"><i class="fi fi-rr-blog-pencil"></i></a>
+              </li>
+              <div class="splitter"></div>
+              <li>
+                <a href="https://github.com/amil1337" data-tooltip="GitHub" target="_blank"><i class="fi fi-brands-github"></i></a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/in/amilibrahimli" data-tooltip="LinkedIn" target="_blank"><i class="fi fi-brands-linkedin"></i></a>
+              </li>
+              <li>
+                <a href="https://t.me/amilIbrahimli" data-tooltip="Telegram" target="_blank"><i class="fi fi-brands-telegram"></i></a>
+              </li>
+              <div class="splitter"></div>
+              <li>
+                <a href="#" data-tooltip="Dark Mode" id="dark-mode-toggle"><i class="fi fi-rc-moon"></i></a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <script is:inline src="/js/main.js"></script>
+  </body>
+</html>
