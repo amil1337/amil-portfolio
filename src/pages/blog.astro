@@ -1,9 +1,9 @@
 ---
-// src/pages/blog.astro
 import MainLayout from '../layouts/MainLayout.astro';
 
 const allPosts = Object.values(import.meta.glob('./blog/*.md', { eager: true })) as any[];
-const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());---
+const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+---
 
 <MainLayout title="Blog | Amil's Portfolio">
   <section class="section blog-page-header">

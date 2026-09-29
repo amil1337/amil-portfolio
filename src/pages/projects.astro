@@ -1,8 +1,6 @@
 ---
-// src/pages/projects.astro
 import MainLayout from '../layouts/MainLayout.astro';
 
-// Projects qovluğundakı faylları oxuyub order-ə görə sıralayırıq
 const allProjects = Object.values(import.meta.glob('../projects/*.md', { eager: true })) as any[];
 const sortedProjects = allProjects.sort((a, b) => a.frontmatter.order - b.frontmatter.order);
 ---
@@ -22,7 +20,6 @@ const sortedProjects = allProjects.sort((a, b) => a.frontmatter.order - b.frontm
     <div class="container">
       <div class="projects-grid">
         
-        <!-- Layihələr avtomatik bura yüklənir -->
         {sortedProjects.map((project) => (
           <div class="project-card">
             <div class="project-image">

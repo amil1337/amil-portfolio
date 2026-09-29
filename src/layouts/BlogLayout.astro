@@ -1,5 +1,4 @@
 ---
-// src/layouts/BlogLayout.astro
 import MainLayout from './MainLayout.astro';
 const { frontmatter } = Astro.props;
 ---
@@ -17,7 +16,6 @@ const { frontmatter } = Astro.props;
 
       <img src={frontmatter.image} alt={frontmatter.title} style="width: 100%; border-radius: 12px; margin-bottom: 3rem;" />
 
-      <!-- Markdown-dan gələn mətn burada avtomatik formatlanacaq -->
       <div class="blog-content">
         <slot />
       </div>
@@ -26,18 +24,14 @@ const { frontmatter } = Astro.props;
   </article>
 </MainLayout>
 
-<!-- Bloq daxilindəki mətnlərin (h2, p, ul) dizaynı -->
 <style is:global>
 <style is:global>
   .blog-content h2 { margin-top: 2rem; margin-bottom: 1rem; font-size: 1.8rem;}
   .blog-content p { margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8; color: var(--color-text);}
   
-  /* Cümlə içindəki kiçik kodlar üçün */
   .blog-content code { background: var(--color-bg-alt); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace;}
   
-  /* Böyük qara kod blokları üçün */
   .blog-content pre { padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem;}
   
-  /* Qara blokun içindəki kodların arxafonunu şəffaflaşdırırıq ki, xəta olmasın */
   .blog-content pre code { background: transparent; padding: 0; color: inherit; }
 </style>
