@@ -16,7 +16,7 @@ const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf
     </div>
   </section>
 
-  <section class="projects-section" style="padding-bottom: 100px;">
+  <section id="projects-exception" class="projects-section" style="padding-bottom: 100px;">
     <div class="container">
       <div class="blog-list-container">
         {sortedPosts.map((post) => (
