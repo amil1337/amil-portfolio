@@ -581,7 +581,11 @@ a:hover {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--card-shadow);
-  transition: transform var(--transition-normal);
+  transition: .1s;
+}
+
+.project-card:hover{
+  scale: 0.995;
 }
 
 .project-image {
@@ -647,6 +651,14 @@ a:hover {
   border-radius: 100px;
   min-width: 150px;
   align-self: flex-start;
+}
+
+.blog-card-full{
+  transition: .1s !important;
+}
+
+.blog-card-full:hover{
+  scale: 0.995;
 }
 
 /* Keep blog action buttons the same height as the other pill buttons. */
