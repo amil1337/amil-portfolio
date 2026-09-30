@@ -1,0 +1,30 @@
+---
+import { languageFromPath, localPath, ui } from '../lib/i18n';
+import MainLayout from '../layouts/MainLayout.astro';
+import BlogCard from '../components/BlogCard.astro';
+import { postsForLanguage } from '../lib/posts';
+
+const lang = languageFromPath(Astro.url.pathname);
+const labels = ui(lang);
+const sortedPosts = await postsForLanguage(lang);
+---
+
+<MainLayout title={`${labels.blog} | Amil Ibrahimli`}>
+  <section class="section blog-page-header">
+    <div class="container">
+      <div class="section-header">
+        <h1>{labels.blog}</h1>
+        <p>{labels.blogIntro}</p>
+        <div class="section-divider"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects-exception" class="projects-section" style="padding-bottom: 100px;">
+    <div class="container">
+      <div class="blog-list-container">
+        {sortedPosts.map((post) => <BlogCard post={post} lang={lang} />)}
+      </div>
+    </div>
+  </section>
+</MainLayout>

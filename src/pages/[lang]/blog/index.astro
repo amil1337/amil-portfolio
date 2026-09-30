@@ -1,0 +1,8 @@
+---
+import Blog from "../../../views/Blog.astro";
+export function getStaticPaths() {
+  return ["en", "az"].map((lang) => ({ params: { lang } }));
+}
+---
+
+<Blog />

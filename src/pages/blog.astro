@@ -1,26 +1,4 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-import BlogCard from '../components/BlogCard.astro';
-import { sortedPosts } from '../lib/posts';
-
+import Blog from '../views/Blog.astro';
 ---
-
-<MainLayout title="Blog | Amil's Portfolio">
-  <section class="section blog-page-header">
-    <div class="container">
-      <div class="section-header">
-        <h1>Blog</h1>
-        <p>Thoughts, tutorials, and insights on web development and design</p>
-        <div class="section-divider"></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects-exception" class="projects-section" style="padding-bottom: 100px;">
-    <div class="container">
-      <div class="blog-list-container">
-        {sortedPosts.map((post) => <BlogCard post={post} />)}
-      </div>
-    </div>
-  </section>
-</MainLayout>
+<Blog />

@@ -1,9 +1,34 @@
 ---
+import { languageFromPath, localPath, ui } from "../lib/i18n";
+import { getPosts } from "../lib/posts";
 const { title = "Amil's Portfolio", bodyClass = "" } = Astro.props;
+const lang = languageFromPath(Astro.url.pathname);
+const labels = ui(lang);
+const otherLang = lang === "en" ? "az" : "en";
+const pagePath = Astro.url.pathname
+  .replace(/^\/(en|az)(?=\/|$)/, "")
+  .replace(/^\/+|\/+$/g, "");
+let switchUrl = localPath(otherLang, pagePath ? pagePath + "/" : "");
+if (pagePath.startsWith("blog/")) {
+  const posts = await getPosts();
+  const slug = pagePath.split("/").pop();
+  const current =
+    posts.find((p) => p.slug === slug && p.language === lang) ||
+    posts.find((p) => p.slug === slug);
+  if (current) {
+    const translated =
+      posts.find(
+        (p) =>
+          p.translationKey === current.translationKey &&
+          p.language === otherLang,
+      ) || current;
+    switchUrl = localPath(otherLang, "blog/" + translated.slug + "/");
+  } else switchUrl = localPath(otherLang, "blog/");
+}
 ---
 
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,16 +37,30 @@ const { title = "Amil's Portfolio", bodyClass = "" } = Astro.props;
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css" />
-    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-straight/css/uicons-regular-straight.css" />
-    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-brands/css/uicons-brands.css" />
-    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-chubby/css/uicons-regular-chubby.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-straight/css/uicons-regular-straight.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/3.0.0/uicons-brands/css/uicons-brands.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-chubby/css/uicons-regular-chubby.css"
+    />
   </head>
   <body class={bodyClass}>
-    
     <main>
-        <slot /> 
+      <slot />
     </main>
 
     <header>
@@ -30,27 +69,76 @@ const { title = "Amil's Portfolio", bodyClass = "" } = Astro.props;
           <div class="container">
             <ul class="nav-links">
               <li>
-                <a href="/" data-tooltip="Home"><i class="fi fi-rr-home"></i></a>
+                <a
+                  href={localPath(lang)}
+                  data-tooltip={labels.home}
+                  aria-label={labels.home}><i class="fi fi-rr-home"></i></a
+                >
               </li>
               <li>
-                <a href="/projects" data-tooltip="Projects"><i class="fi fi-rr-diagram-project"></i></a>
+                <a
+                  href={localPath(lang, "projects/")}
+                  data-tooltip={labels.projects}
+                  aria-label={labels.projects}
+                  ><i class="fi fi-rr-diagram-project"></i></a
+                >
               </li>
               <li>
-                <a href="/blog" data-tooltip="Blog"><i class="fi fi-rr-blog-pencil"></i></a>
+                <a
+                  href={localPath(lang, "blog/")}
+                  data-tooltip={labels.blog}
+                  aria-label={labels.blog}
+                  ><i class="fi fi-rr-blog-pencil"></i></a
+                >
               </li>
               <div class="splitter"></div>
               <li>
-                <a href="https://github.com/amil1337" data-tooltip="GitHub" target="_blank"><i class="fi fi-brands-github"></i></a>
+                <a
+                  href="https://github.com/amil1337"
+                  data-tooltip="GitHub"
+                  target="_blank"><i class="fi fi-brands-github"></i></a
+                >
               </li>
               <li>
-                <a href="https://www.linkedin.com/in/amilibrahimli" data-tooltip="LinkedIn" target="_blank"><i class="fi fi-brands-linkedin"></i></a>
+                <a
+                  href="https://www.linkedin.com/in/amilibrahimli"
+                  data-tooltip="LinkedIn"
+                  target="_blank"><i class="fi fi-brands-linkedin"></i></a
+                >
               </li>
               <li>
-                <a href="https://t.me/amilIbrahimli" data-tooltip="Telegram" target="_blank"><i class="fi fi-brands-telegram"></i></a>
+                <a
+                  href="https://t.me/amilIbrahimli"
+                  data-tooltip="Telegram"
+                  target="_blank"><i class="fi fi-brands-telegram"></i></a
+                >
               </li>
               <div class="splitter"></div>
               <li>
-                <a href="#" data-tooltip="Dark Mode" id="dark-mode-toggle"><i class="fi fi-rc-moon"></i></a>
+                <a
+                  href="#"
+                  data-tooltip={labels.dark}
+                  aria-label={labels.dark}
+                  data-dark-label={labels.dark}
+                  data-light-label={labels.light}
+                  id="dark-mode-toggle"><i class="fi fi-rc-moon"></i></a
+                >
+              </li>
+              <li class="language-switch-item">
+                <a
+                  href={switchUrl}
+                  class="language-switch-icon"
+                  hreflang={otherLang}
+                  lang={otherLang}
+                  aria-label={otherLang === "az"
+                    ? "Azərbaycan dilinə keç"
+                    : "Switch to English"}
+                  data-tooltip={otherLang === "az"
+                    ? "Azərbaycan dili"
+                    : "English"}
+                >
+                  <i class="fi fi-rr-globe" aria-hidden="true"></i>
+                </a>
               </li>
             </ul>
           </div>

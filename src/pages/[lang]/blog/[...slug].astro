@@ -1,0 +1,28 @@
+---
+import { postsForLanguage } from "../../../lib/posts";
+import BlogLayout from "../../../layouts/BlogLayout.astro";
+export async function getStaticPaths() {
+  const routes = await Promise.all(
+    ["en", "az"].map(async (lang) => {
+      const posts = await postsForLanguage(lang as "en" | "az");
+      return posts.map((post) => ({
+        params: { lang, slug: post.slug },
+        props: { post },
+      }));
+    }),
+  );
+  return routes.flat();
+}
+const { post } = Astro.props;
+const Content = post.Content;
+---
+
+{
+  post.frontmatter.layout ? (
+    <Content />
+  ) : (
+    <BlogLayout frontmatter={post.frontmatter}>
+      <Content />
+    </BlogLayout>
+  )
+}

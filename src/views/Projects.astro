@@ -1,0 +1,32 @@
+---
+import { languageFromPath, localPath, ui } from '../lib/i18n';
+import MainLayout from '../layouts/MainLayout.astro';
+import ProjectFolder from '../components/ProjectFolder.astro';
+
+const allProjects = Object.values(import.meta.glob('../projects/*.md', { eager: true })) as any[];
+const sortedProjects = allProjects.sort((a, b) => a.frontmatter.order - b.frontmatter.order);
+const lang = languageFromPath(Astro.url.pathname);
+const labels = ui(lang);
+---
+
+<MainLayout title={`${labels.projects} | Amil Ibrahimli`}>
+  <section class="section projects-page-header">
+    <div class="container">
+      <div class="section-header">
+        <h1>{labels.projects}</h1>
+        <p>{labels.projectsIntro}</p>
+        <div class="section-divider"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects-exception" class="projects-section">
+    <div class="container">
+      <div class="projects-grid">
+        
+        {sortedProjects.map((project, index) => <ProjectFolder project={project} index={index} lang={lang} />)}
+
+      </div>
+    </div>
+  </section>
+</MainLayout>

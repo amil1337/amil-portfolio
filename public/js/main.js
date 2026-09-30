@@ -9,7 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (currentTheme === 'dark') {
     document.body.setAttribute('data-theme', 'dark');
     darkModeToggle.innerHTML = '<i class="fi fi-rs-brightness"></i>';
-    darkModeToggle.setAttribute('data-tooltip', 'Light Mode');
+    darkModeToggle.setAttribute('data-tooltip', darkModeToggle.dataset.lightLabel || 'Light Mode');
+    darkModeToggle.setAttribute('aria-label', darkModeToggle.dataset.lightLabel || 'Light Mode');
   }
   
   // Toggle theme when button is clicked
@@ -23,11 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.setAttribute('data-theme', 'dark');
       theme = 'dark';
       darkModeToggle.innerHTML = '<i class="fi fi-rs-brightness"></i>';
-      darkModeToggle.setAttribute('data-tooltip', 'Light Mode');
+      darkModeToggle.setAttribute('data-tooltip', darkModeToggle.dataset.lightLabel || 'Light Mode');
+    darkModeToggle.setAttribute('aria-label', darkModeToggle.dataset.lightLabel || 'Light Mode');
     } else {
       document.body.removeAttribute('data-theme');
       darkModeToggle.innerHTML = '<i class="fi fi-rc-moon"></i>';
-      darkModeToggle.setAttribute('data-tooltip', 'Dark Mode');
+      darkModeToggle.setAttribute('data-tooltip', darkModeToggle.dataset.darkLabel || 'Dark Mode');
+      darkModeToggle.setAttribute('aria-label', darkModeToggle.dataset.darkLabel || 'Dark Mode');
     }
     
     localStorage.setItem('theme', theme);

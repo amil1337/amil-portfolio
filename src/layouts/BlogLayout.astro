@@ -1,37 +1,175 @@
 ---
-import MainLayout from './MainLayout.astro';
+import { languageFromPath, ui } from "../lib/i18n";
+import MainLayout from "./MainLayout.astro";
 const { frontmatter } = Astro.props;
 const parsedDate = frontmatter.date ? new Date(frontmatter.date) : undefined;
-const date = parsedDate && !Number.isNaN(parsedDate.valueOf()) ? parsedDate : undefined;
+const date =
+  parsedDate && !Number.isNaN(parsedDate.valueOf()) ? parsedDate : undefined;
+const lang = languageFromPath(Astro.url.pathname);
+const labels = ui(lang);
+const contentLang =
+  frontmatter.lang || (Astro.url.pathname.includes("/blog/az/") ? "az" : "en");
 ---
 
 <MainLayout title={frontmatter.title} bodyClass="blog-theme">
   <article class="section" style="padding-bottom: 150px;">
     <div class="container">
-      
       <div style="text-align: center; margin-bottom: 2rem;">
-        <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">{frontmatter.title}</h1>
-        {date && <p style="color: var(--color-text-muted);">
-          Published: <time datetime={date.toISOString()}>{date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}</time>
-        </p>}
+        <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">
+          {frontmatter.title}
+        </h1>
+        {
+          date && (
+            <p style="color: var(--color-text-muted);">
+              {labels.published}:{" "}
+              <time datetime={date.toISOString()}>
+                {date.toLocaleDateString(lang === "az" ? "az-AZ" : "en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  timeZone: "UTC",
+                })}
+              </time>
+            </p>
+          )
+        }
       </div>
 
-      <div class="blog-content">
+      {
+        contentLang !== lang && (
+          <p class="translation-notice">{labels.unavailable}</p>
+        )
+      }
+      <div class="blog-content" lang={contentLang}>
         <slot />
       </div>
-      
     </div>
   </article>
 </MainLayout>
 
 <style is:global>
-  .blog-content img { display: block; max-width: 100%; height: auto; border-radius: 12px; }
-  .blog-content h2 { margin-top: 2rem; margin-bottom: 1rem; font-size: 1.8rem;}
-  .blog-content p { margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8; color: var(--color-text);}
-  
-  .blog-content code { background: var(--color-bg-alt); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace;}
-  
-  .blog-content pre { padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem;}
-  
-  .blog-content pre code { background: transparent; padding: 0; color: inherit; }
+  .blog-content img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+  .blog-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+  }
+  .blog-content p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text);
+  }
+
+  .blog-content code {
+    background: var(--color-bg-alt);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;
+  }
+
+  .blog-content pre {
+    padding: 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+  }
+
+  .blog-content pre code {
+    background: transparent;
+    padding: 0;
+    color: inherit;
+  }
+
+  .blog-content strong {
+    font-weight: var(--weight-bold);
+  }
+  .blog-content em {
+    font-style: italic;
+  }
+  .blog-content del {
+    text-decoration: line-through;
+  }
+  .blog-content ul,
+  .blog-content ol {
+    margin: 0 0 1.5rem;
+    padding-left: 1.5rem;
+  }
+  .blog-content ul {
+    list-style: disc;
+  }
+  .blog-content ol {
+    list-style: decimal;
+  }
+  .blog-content li {
+    margin-bottom: 0.5rem;
+  }
+  .blog-content .contains-task-list {
+    padding-left: 0;
+    list-style: none;
+  }
+  .blog-content input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.5rem;
+    padding: 0;
+    accent-color: var(--color-accent);
+  }
+  .blog-content blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-bg-alt);
+    border-radius: 0 8px 8px 0;
+  }
+  .blog-content blockquote p:last-child {
+    margin-bottom: 0;
+  }
+  .blog-content table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    font-size: var(--text-sm);
+  }
+  .blog-content th,
+  .blog-content td {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    text-align: left;
+    line-height: 1.6;
+  }
+  .blog-content th {
+    font-weight: var(--weight-semibold);
+    background: var(--color-bg-alt);
+  }
+  .blog-content details {
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+  }
+  .blog-content summary {
+    cursor: pointer;
+    font-weight: var(--weight-semibold);
+    line-height: 1.6;
+  }
+  .blog-content details[open] summary {
+    margin-bottom: 1rem;
+  }
+  .blog-content details p:last-child {
+    margin-bottom: 0;
+  }
+  .blog-content hr {
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    margin: 2rem 0;
+  }
+  .blog-content img {
+    margin-block: 1.5rem;
+  }
 </style>

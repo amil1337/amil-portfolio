@@ -1,29 +1,5 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
-import ProjectFolder from '../components/ProjectFolder.astro';
-
-const allProjects = Object.values(import.meta.glob('../projects/*.md', { eager: true })) as any[];
-const sortedProjects = allProjects.sort((a, b) => a.frontmatter.order - b.frontmatter.order);
+import Projects from "../views/Projects.astro";
 ---
 
-<MainLayout title="Projects | Amil's Portfolio">
-  <section class="section projects-page-header">
-    <div class="container">
-      <div class="section-header">
-        <h1>Projects</h1>
-        <p>A collection of my work, experiments, and client projects</p>
-        <div class="section-divider"></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects-exception" class="projects-section">
-    <div class="container">
-      <div class="projects-grid">
-        
-        {sortedProjects.map((project, index) => <ProjectFolder project={project} index={index} />)}
-
-      </div>
-    </div>
-  </section>
-</MainLayout>
+<Projects />

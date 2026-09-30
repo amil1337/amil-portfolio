@@ -1,62 +1,158 @@
 ---
-import CardArrow from './CardArrow.astro';
-import { postDate, type BlogPost } from '../lib/posts';
-interface Props { post: BlogPost; }
-const { post } = Astro.props;
-const { title, description, image, imageAlt, category = 'Blog', author = 'Amil Ibrahimli', authorImage } = post.frontmatter;
+import { ui, type Language } from "../lib/i18n";
+import CardArrow from "./CardArrow.astro";
+import { postDate, type BlogPost } from "../lib/posts";
+interface Props {
+  post: BlogPost;
+  lang?: Language;
+}
+const { post, lang = "en" } = Astro.props;
+const labels = ui(lang);
+const {
+  title,
+  description,
+  image,
+  imageAlt,
+  category = "Blog",
+  author = "Amil Ibrahimli",
+  authorImage,
+} = post.frontmatter;
 const date = postDate(post.frontmatter.date);
-const avatar = authorImage || (author === 'Amil Ibrahimli' ? '/images/3x4.jpg' : undefined);
+const avatar =
+  authorImage || (author === "Amil Ibrahimli" ? "/images/3x4.jpg" : undefined);
 ---
 
 <article class="blog-card">
   <div class="blog-card__cover">
-    {image ? <img src={image} alt={imageAlt || ''} loading="lazy" decoding="async" /> : (
-      <div class="blog-card__placeholder" aria-hidden="true">
-        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10h28l12 12v32H12zM40 10v12h12M22 32h20M22 40h20M22 48h12" /></svg>
-      </div>
-    )}
-    <span class="blog-card__category">#{category.replace(/^#/, '')}</span>
+    {
+      image ? (
+        <img src={image} alt={imageAlt || ""} loading="lazy" decoding="async" />
+      ) : (
+        <div class="blog-card__placeholder" aria-hidden="true">
+          <svg
+            viewBox="0 0 64 64"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M12 10h28l12 12v32H12zM40 10v12h12M22 32h20M22 40h20M22 48h12" />
+          </svg>
+        </div>
+      )
+    }
+    <!-- <span class="blog-card__category">#{category.replace(/^#/, '')}</span> -->
   </div>
   <div class="blog-card__body">
-    <h3 class="blog-card__title"><a class="blog-card__link" href={post.url}>{title}</a></h3>
-    {description && <p class="blog-card__description">{description}</p>}
+    <h3 class="blog-card__title">
+      <a class="blog-card__link" href={post.url}
+        ><span class="blog-card__title-text" lang={post.language}>{title}</span
+        ></a>
+    </h3>
+    {
+      description && (
+        <p class="blog-card__description" lang={post.language}>
+          {description}
+        </p>
+      )
+    }
     <div class="blog-card__footer">
       <div class="blog-card__author">
-        {avatar ? <img src={avatar} alt="" width="44" height="44" loading="lazy" /> : <span class="blog-card__initial" aria-hidden="true">{author.slice(0, 1)}</span>}
-        <div><span class="blog-card__byline">By {author}</span>
-          {date && <time datetime={date.toISOString()}>{date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}</time>}
+        {
+          avatar ? (
+            <img src={avatar} alt="" width="44" height="44" loading="lazy" />
+          ) : (
+            <span class="blog-card__initial" aria-hidden="true">
+              {author.slice(0, 1)}
+            </span>
+          )
+        }
+        <div>
+          <span class="blog-card__byline">{labels.by} {author}</span>
+          {
+            date && (
+              <time datetime={date.toISOString()}>
+                {date.toLocaleDateString(lang === "az" ? "az-AZ" : "en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  timeZone: "UTC",
+                })}
+              </time>
+            )
+          }
+          {
+            post.language !== lang && (
+              <span class="blog-card__language">{labels.original}</span>
+            )
+          }
         </div>
       </div>
       <div class="blog-card__actions">
-        <button class="blog-card__share" type="button" data-share-url={post.url} data-share-title={title} aria-label={`Share ${title}`} title="Share article">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4l6 6-6 6V12C8 12 5 15 3 20c0-9 4-12 12-12z" /></svg>
+        <button
+          class="blog-card__share"
+          type="button"
+          data-share-url={post.url}
+          data-share-title={title}
+          aria-label={`${labels.share}: ${title}`}
+          title={labels.share}
+          data-copied={labels.copied}
+          data-copy={labels.copy}
+          data-share-error={labels.shareError}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            ><path d="M15 4l6 6-6 6V12C8 12 5 15 3 20c0-9 4-12 12-12z"
+            ></path></svg
+          >
         </button>
         <CardArrow />
       </div>
     </div>
-    <span class="blog-card__share-status" role="status" aria-live="polite"></span>
+    <span class="blog-card__share-status" role="status" aria-live="polite"
+    ></span>
   </div>
 </article>
 
 <script>
-  document.querySelectorAll<HTMLButtonElement>('[data-share-url]').forEach(button => {
-    button.addEventListener('click', async () => {
-      const status = button.closest('.blog-card')?.querySelector('.blog-card__share-status');
-      const url = new URL(button.dataset.shareUrl!, window.location.href).href;
-      if (status) status.textContent = '';
-      try {
-        if (navigator.share) {
-          await navigator.share({ title: button.dataset.shareTitle, url });
-        } else if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(url);
-          if (status) status.textContent = 'Article link copied.';
-        } else {
-          window.prompt('Copy this article link:', url);
+  document
+    .querySelectorAll<HTMLButtonElement>("[data-share-url]")
+    .forEach((button) => {
+      button.addEventListener("click", async () => {
+        const status = button
+          .closest(".blog-card")
+          ?.querySelector(".blog-card__share-status");
+        const url = new URL(button.dataset.shareUrl!, window.location.href)
+          .href;
+        if (status) status.textContent = "";
+        try {
+          if (navigator.share) {
+            await navigator.share({ title: button.dataset.shareTitle, url });
+          } else if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(url);
+            if (status)
+              status.textContent =
+                button.dataset.copied || "Article link copied.";
+          } else {
+            window.prompt(
+              button.dataset.copy || "Copy this article link:",
+              url,
+            );
+          }
+        } catch (error) {
+          if (error instanceof Error && error.name === "AbortError") return;
+          if (status)
+            status.textContent =
+              button.dataset.shareError ||
+              "Unable to share. Copy the article link from your address bar.";
         }
-      } catch (error) {
-        if (error instanceof Error && error.name === 'AbortError') return;
-        if (status) status.textContent = 'Unable to share. Copy the article link from your address bar.';
-      }
+      });
     });
-  });
 </script>
