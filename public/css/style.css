@@ -690,22 +690,7 @@ nav a[data-tooltip]:hover::before {
     height: 200px;
   }
 
-  .nav-links a {
-    font-size: var(--text-lg);
-    padding-inline: 0.5rem;
-  }
 
-  .nav-links:hover a {
-    padding-inline: 0.5rem;
-  }
-
-  .nav-links a:hover {
-    padding: 0.8rem 1rem;
-  }
-
-  .splitter {
-    margin-inline: 0.3rem;
-  }
 }
 
 .blog-list-container {
@@ -854,15 +839,28 @@ nav a[data-tooltip]:hover::before {
 .blog-card__description { -webkit-line-clamp: 3; line-clamp: 3; flex-shrink: 0; }
 .blog-card__language { display: block; color: var(--color-text-muted); font-size: var(--text-xs); }
 .translation-notice { padding: 12px 16px; border: 1px solid var(--color-border); background: var(--color-bg-alt); border-radius: 10px; font-size: var(--text-sm); }
-@media (max-width: 480px) {
-  .nav-links, .nav-links:hover { padding: .35rem .65rem; gap: .05rem; }
-  .nav-links a, .nav-links:hover a, .nav-links a:hover {
+@media (max-width: 576px) {
+  nav .container { padding-inline: 8px; }
+  .nav-links {
+    padding: .35rem .55rem;
+    gap: clamp(2px, .8vw, 4px);
+  }
+  .nav-links:hover {
+    padding: .55rem .8rem;
+  }
+  .nav-links li { display: flex; align-items: center; }
+  .nav-links a,
+  .nav-links:hover a,
+  .nav-links a:hover {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     min-height: 44px;
-    padding: .5rem clamp(.3rem, 1.5vw, .45rem);
+    padding: .5rem clamp(4px, 1.25vw, 7px);
     font-size: 22px;
+    line-height: 1;
   }
-  .splitter { margin-inline: .25rem; width: 1px; }
+  .nav-links i { display: flex; line-height: 1; }
+  .nav-links i::before { display: block; }
+  .splitter { flex-shrink: 0; margin-inline: 2px; width: 1px; }
 }
