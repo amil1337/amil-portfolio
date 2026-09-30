@@ -1,5 +1,5 @@
 ---
-const { title = "Amil's Portfolio" } = Astro.props;
+const { title = "Amil's Portfolio", bodyClass = "" } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ const { title = "Amil's Portfolio" } = Astro.props;
     <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-brands/css/uicons-brands.css" />
     <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-chubby/css/uicons-regular-chubby.css" />
   </head>
-  <body>
+  <body class={bodyClass}>
     
     <main>
         <slot /> 

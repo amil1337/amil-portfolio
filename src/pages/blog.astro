@@ -1,8 +1,8 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import BlogCard from '../components/BlogCard.astro';
+import { sortedPosts } from '../lib/posts';
 
-const allPosts = Object.values(import.meta.glob('./blog/*.md', { eager: true })) as any[];
-const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
 ---
 
 <MainLayout title="Blog | Amil's Portfolio">
@@ -19,30 +19,7 @@ const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf
   <section id="projects-exception" class="projects-section" style="padding-bottom: 100px;">
     <div class="container">
       <div class="blog-list-container">
-        {sortedPosts.map((post) => (
-          <div class="blog-card-full">
-            <h3 style="margin-bottom: 0.5rem;">{post.frontmatter.title}</h3>
-            <p>{post.frontmatter.description}</p>
-            
-            <div class="project-tech" style="margin-top: 1rem;">
-              <span>{post.frontmatter.category}</span>
-              <span>{new Date(post.frontmatter.date).toLocaleDateString('az-AZ')}</span>
-            </div>
-            
-            <div class="project-links">
-              <a href={post.url} class="button1 button1--static" style="padding: 0.5rem 1rem;">
-                <span class="button1__icon-wrapper" style="width: 20px; height: 20px;">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button1__icon-svg" width="10" height="10">
-                    <line x1="21" y1="6" x2="3" y2="6"></line>
-                    <line x1="15" y1="12" x2="3" y2="12"></line>
-                    <line x1="17" y1="18" x2="3" y2="18"></line>
-                  </svg>
-                </span>
-                Read Article
-              </a>
-            </div>
-          </div>
-        ))}
+        {sortedPosts.map((post) => <BlogCard post={post} />)}
       </div>
     </div>
   </section>

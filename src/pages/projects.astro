@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import ProjectFolder from '../components/ProjectFolder.astro';
 
 const allProjects = Object.values(import.meta.glob('../projects/*.md', { eager: true })) as any[];
 const sortedProjects = allProjects.sort((a, b) => a.frontmatter.order - b.frontmatter.order);
@@ -20,35 +21,7 @@ const sortedProjects = allProjects.sort((a, b) => a.frontmatter.order - b.frontm
     <div class="container">
       <div class="projects-grid">
         
-        {sortedProjects.map((project) => (
-          <div class="project-card">
-            <div class="project-image">
-              <img src={project.frontmatter.image} alt={project.frontmatter.title} />
-            </div>
-            <div class="project-details">
-              <h3>{project.frontmatter.title}</h3>
-              <p>{project.frontmatter.description}</p>
-              
-              <div class="project-tech">
-                {project.frontmatter.tech.map((t: string) => (
-                  <span>{t}</span>
-                ))}
-              </div>
-              
-              <div class="project-links">
-                <a href={project.frontmatter.github} class="button1 button1--static" target="_blank">
-                  <span class="button1__icon-wrapper">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button1__icon-svg" width="13" height="13">
-                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                    </svg>
-                  </span>
-                  GitHub
-                </a>
-              </div>
-            </div>
-          </div>
-        ))}
+        {sortedProjects.map((project, index) => <ProjectFolder project={project} index={index} />)}
 
       </div>
     </div>

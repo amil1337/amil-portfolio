@@ -3,8 +3,8 @@ layout: ../../layouts/BlogLayout.astro
 title: "Test Blog"
 description: "This is a test blog"
 date: "2026-09-29"
-category: "Test"
-image: "/images/0624-Polymorphism-Social-1.webp"
+category: "science"
+image: "/images/images.jpg"
 ---
 
 SQL is the natural choice for highly relational data, which describes most web applications with complex business logic. Yet every time I create a schema, I find myself copying and pasting nearly identical table definitions, tweaking only the foreign key references and a few field names. There has to be a better way.

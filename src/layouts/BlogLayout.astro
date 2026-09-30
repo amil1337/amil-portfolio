@@ -1,20 +1,20 @@
 ---
 import MainLayout from './MainLayout.astro';
 const { frontmatter } = Astro.props;
+const parsedDate = frontmatter.date ? new Date(frontmatter.date) : undefined;
+const date = parsedDate && !Number.isNaN(parsedDate.valueOf()) ? parsedDate : undefined;
 ---
 
-<MainLayout title={frontmatter.title}>
+<MainLayout title={frontmatter.title} bodyClass="blog-theme">
   <article class="section" style="padding-bottom: 150px;">
-    <div class="container" style="max-width: 800px; margin: 0 auto;">
+    <div class="container">
       
       <div style="text-align: center; margin-bottom: 2rem;">
         <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">{frontmatter.title}</h1>
-        <p style="color: var(--color-text-muted);">
-          Published: {new Date(frontmatter.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-        </p>
+        {date && <p style="color: var(--color-text-muted);">
+          Published: <time datetime={date.toISOString()}>{date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}</time>
+        </p>}
       </div>
-
-      <img src={frontmatter.image} alt={frontmatter.title} style="width: 100%; border-radius: 12px; margin-bottom: 3rem;" />
 
       <div class="blog-content">
         <slot />
@@ -25,7 +25,7 @@ const { frontmatter } = Astro.props;
 </MainLayout>
 
 <style is:global>
-<style is:global>
+  .blog-content img { display: block; max-width: 100%; height: auto; border-radius: 12px; }
   .blog-content h2 { margin-top: 2rem; margin-bottom: 1rem; font-size: 1.8rem;}
   .blog-content p { margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8; color: var(--color-text);}
   
