@@ -4,6 +4,8 @@ import AboutAz from '../components/AboutAz.astro';
 import MainLayout from '../layouts/MainLayout.astro';
 import ProjectFolder from '../components/ProjectFolder.astro';
 import BlogCard from '../components/BlogCard.astro';
+import Awards from '../components/Awards.astro';
+import { existsSync } from 'node:fs';
 import { postsForLanguage } from '../lib/posts';
 
 
@@ -15,6 +17,8 @@ const lang = languageFromPath(Astro.url.pathname);
 const labels = ui(lang);
 const sortedPosts = await postsForLanguage(lang);
 const recentPosts = sortedPosts.slice(0, 3);
+const hasCV = existsSync(new URL('../../public/cv.pdf', import.meta.url));
+const CVTag = hasCV ? 'a' : 'button';
 ---
 
 <MainLayout title="Amil's Portfolio">
@@ -33,6 +37,10 @@ const recentPosts = sortedPosts.slice(0, 3);
               </span>
               {labels.work}
             </a>
+            <CVTag class="cv-button" href={hasCV ? '/cv.pdf' : undefined} download={hasCV ? 'Amil-Ibrahimli-CV.pdf' : undefined} type={hasCV ? undefined : 'button'} disabled={!hasCV} title={!hasCV ? (lang === 'az' ? 'CV tezliklə əlavə olunacaq' : 'CV will be available soon') : undefined}>
+              <svg width="20" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>
+              {lang === 'az' ? 'CV-ni yüklə' : 'Download CV'}
+            </CVTag>
           </div>
         </div>
         <div class="hero-image">
@@ -56,14 +64,10 @@ const recentPosts = sortedPosts.slice(0, 3);
         <div class="about-text">
 {lang === "az" ? <AboutAz /> : (<Fragment>
           <p>
-            {labels.greeting} Amil. I am from Azerbaijan, Baku city. Right now I'm in the second year of my studies at Bilkent University, Computer Engineering department.
-            Before coming to Bilkent, I gained real-world coding experience with Frontend Development. With just HTML, CSS, and JavaScript I've built several websites and sold them to customers.
-            I think that it's important to mention that AI helped me a lot on building these projects because without it planning all stuff such as finding a suitable design, customizing it, communicating with the customer 
-            to make it personalized, coding, testing, and deploying would be nightmare. But I should also mention that I don't like vibecoding (see: <a target="_blank" href="https://github.com/resources/articles/what-is-vibe-coding" style="color: #007AFF; text-decoration: underline;">vibe-coding</a>) as I believe it prevents us from actually learning the process.
-            However, I like getting assistance from AI but writing the code manually. Below, you can find some of my projects.
+            Hi, I'm Amil. I am from Baku, Azerbaijan. Right now I'm in the second year of my studies at Bilkent University, in the Computer Engineering department. Before coming to Bilkent, I gained real-world coding experience with frontend development. Using HTML, CSS, and JavaScript, I've built several websites and sold them to customers. I use AI for assistance along the way, while writing the code myself and making sure I understand how it works. Below, you can find some of my projects.
           </p>
           <p>
-            Here, at Bilkent, in <a target="_blank" href="https://catalog.bilkent.edu.tr/course/c11101.html" style="color: #007AFF; text-decoration: underline;">CS101</a> and <a target="_blank" href="https://catalog.bilkent.edu.tr/course/c11102.html" style="color: #007AFF; text-decoration: underline;">CS102</a> I had the chance of learning Java Core, OOP Principles, Exception Handling, GUI, Multithreading, etc. By the end of the semester we even built a project to demonstrate our skills. Below you will find that project too. Though I still haven't chosen my final career path yet, I believe that learning the Backend could be a good starting point to understand the system and then delve into the other fields of Computer Science.
+            Here, at Bilkent, in <a target="_blank" href="https://catalog.bilkent.edu.tr/course/c11101.html" style="color: #007AFF; text-decoration: underline;">CS101</a> and <a target="_blank" href="https://catalog.bilkent.edu.tr/course/c11102.html" style="color: #007AFF; text-decoration: underline;">CS102</a> I had the chance of learning Java Core, OOP Principles, Exception Handling, GUI, Multithreading, etc. By the end of the semester we built a project to demonstrate our skills. Below you will find that project too. Though I still haven't chosen my final career path yet, I believe that learning the Backend could be a good starting point to understand the system and then delve into the other fields of Computer Science.
             That's why I'm learning Spring Boot right now to be more autonomous on writing Backend apps. At the end of the year, I should have completed a summer internship (see: <a target="_blank" href="https://catalog.bilkent.edu.tr/course/c11299.html" style="color: #007AFF; text-decoration: underline;">CS299</a>) in a role that aligns with my degree. I plan to go with Backend Development roles, especially the ones where I can practice and improve my Spring Boot skills.
           </p>
           <p>
@@ -112,6 +116,8 @@ const recentPosts = sortedPosts.slice(0, 3);
     </div>
   </section>
 
+  <Awards lang={lang} />
+
   <section id="recent-blogs" class="section about-section">
     <div class="container">
       <div class="section-header">
@@ -135,3 +141,6 @@ const recentPosts = sortedPosts.slice(0, 3);
     </div>
   </section>
 </MainLayout>
+
+
+

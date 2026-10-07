@@ -760,8 +760,8 @@ nav a[data-tooltip]:hover::before {
 .blog-card__author time { display: block; font-size: var(--text-xs); color: var(--color-text-muted); }
 .blog-card__actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .blog-card__share { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; }
-.blog-card__share { position: relative; z-index: 2; border: 1px solid var(--color-primary); background: var(--color-primary); color: var(--color-bg); cursor: pointer; transition: background-color 0.3s, color 0.3s; }
-.blog-card__share:is(:hover, :focus-visible) { background: var(--color-bg); color: var(--color-primary); }
+.blog-card__share { position: relative; z-index: 2; border: 1px solid var(--color-primary); background: var(--color-bg); color: var(--color-primary); cursor: pointer; transition: background-color 0.3s ease, color 0.3s ease; }
+.blog-card__share:is(:hover, :focus-visible) { background: var(--color-primary); color: var(--color-bg); }
 .blog-card__share:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
 .blog-card__share-status { font-size: var(--text-xs); color: var(--color-text-muted); }
 .blog-card__share-status:not(:empty) { margin-top: 10px; }
@@ -864,3 +864,27 @@ nav a[data-tooltip]:hover::before {
   .nav-links i::before { display: block; }
   .splitter { flex-shrink: 0; margin-inline: 2px; width: 1px; }
 }
+/* Secondary resume action; uses the same monochrome theme as the portfolio. */
+.hero-buttons { flex-wrap: wrap; }
+.cv-button { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; padding: .75rem 1.25rem; min-height: 51px; border: 1px solid var(--color-primary); border-radius: 10rem; background: transparent; color: var(--color-text); font: 600 1rem var(--font-inter); white-space: nowrap; transition: background-color .2s; }
+.cv-button:disabled { cursor: not-allowed; opacity: .55; }
+.cv-button:not(:disabled):hover { background: var(--color-bg-alt); }
+.cv-button:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { .cv-button { transition: none; } }
+
+/* Keep both hero actions exactly the same size in either language. */
+.hero-buttons > :is(.button1, .cv-button) {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  width: 190px;
+  height: 52px;
+  min-height: 52px;
+  padding: 0 18px;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+
+@media (prefers-reduced-motion: reduce) { .blog-card__share { transition: none; } }
+

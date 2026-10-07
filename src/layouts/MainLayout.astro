@@ -33,6 +33,19 @@ if (pagePath.startsWith("blog/")) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <script is:inline>
+      try {
+        const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      } catch {
+        document.documentElement.dataset.theme = 'light';
+      }
+    </script>
+    <style is:inline>
+      html { background: #fff; }
+      html[data-theme="dark"] { background: #111; }
+    </style>
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -59,6 +72,9 @@ if (pagePath.startsWith("blog/")) {
     />
   </head>
   <body class={bodyClass}>
+    <script is:inline>
+      document.body.dataset.theme = document.documentElement.dataset.theme || 'light';
+    </script>
     <main>
       <slot />
     </main>
@@ -149,3 +165,4 @@ if (pagePath.startsWith("blog/")) {
     <script is:inline src="/js/main.js"></script>
   </body>
 </html>
+

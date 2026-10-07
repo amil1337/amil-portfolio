@@ -2,8 +2,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   const darkModeToggle = document.getElementById('dark-mode-toggle');
   
-  // Always start in light mode
-  const currentTheme = localStorage.getItem('theme') || 'light';
+  // Theme was restored before the first paint.
+  const currentTheme = document.documentElement.dataset.theme || 'light';
   
   // Apply the current theme
   if (currentTheme === 'dark') {
@@ -33,7 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
       darkModeToggle.setAttribute('aria-label', darkModeToggle.dataset.darkLabel || 'Dark Mode');
     }
     
-    localStorage.setItem('theme', theme);
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    try { localStorage.setItem('theme', theme); } catch {}
   });
   
   // Smooth scrolling for in-page links
@@ -104,3 +106,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
