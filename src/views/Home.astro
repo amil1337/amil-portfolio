@@ -8,8 +8,6 @@ import Awards from '../components/Awards.astro';
 import { existsSync } from 'node:fs';
 import { postsForLanguage } from '../lib/posts';
 
-
-
 const allProjects = Object.values(import.meta.glob('../projects/*.md', { eager: true })) as any[];
 const sortedProjects = allProjects.sort((a, b) => a.frontmatter.order - b.frontmatter.order);
 const featuredProjects = sortedProjects.slice(0, 4);
@@ -126,7 +124,7 @@ const CVTag = hasCV ? 'a' : 'button';
       </div>
       
       <div style="margin-top: 64px;" class="blog-list-container">
-        {recentPosts.map((post) => <BlogCard post={post} lang={lang} />)}
+        {recentPosts.length ? recentPosts.map((post) => <BlogCard post={post} lang={lang} />) : <p>{labels.noPosts}</p>}
       </div>
       
       <div class="view-more" style="margin-top: 2rem; margin-bottom: 4rem;">
@@ -141,6 +139,3 @@ const CVTag = hasCV ? 'a' : 'button';
     </div>
   </section>
 </MainLayout>
-
-
-

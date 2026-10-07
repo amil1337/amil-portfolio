@@ -13,7 +13,6 @@ const {
   description,
   image,
   imageAlt,
-  category = "Blog",
   author = "Amil Ibrahimli",
   authorImage,
 } = post.frontmatter;
@@ -40,7 +39,7 @@ const avatar =
         </div>
       )
     }
-    <!-- <span class="blog-card__category">#{category.replace(/^#/, '')}</span> -->
+    
   </div>
   <div class="blog-card__body">
     <h3 class="blog-card__title">
@@ -156,4 +155,3 @@ const avatar =
       });
     });
 </script>
-

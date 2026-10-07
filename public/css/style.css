@@ -689,8 +689,7 @@ nav a[data-tooltip]:hover::before {
     width: 200px;
     height: 200px;
   }
-
-
+  
 }
 
 .blog-list-container {
@@ -735,18 +734,6 @@ nav a[data-tooltip]:hover::before {
 .blog-card__cover > img { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; }
 .blog-card__placeholder { height: 100%; display: grid; place-items: center; color: var(--color-text-muted); }
 .blog-card__placeholder svg { width: 72px; height: 72px; }
-.blog-card__category {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  max-width: calc(100% - 28px);
-  overflow-wrap: anywhere;
-  padding: 4px 10px;
-  border-radius: 30px;
-  color: #fff;
-  font-size: var(--text-xs);
-  font-weight: var(--weight-medium);
-}
 .blog-card__body { display: flex; flex-direction: column; min-width: 0; padding: 8px 12px 8px 0; }
 .blog-card__title { font-size: var(--text-xl); line-height: 1.4; margin-bottom: 8px; overflow-wrap: anywhere; }
 .blog-card__link::after { content: ''; position: absolute; inset: 0; border-radius: 28px; z-index: 1; }
@@ -864,7 +851,7 @@ nav a[data-tooltip]:hover::before {
   .nav-links i::before { display: block; }
   .splitter { flex-shrink: 0; margin-inline: 2px; width: 1px; }
 }
-/* Secondary resume action; uses the same monochrome theme as the portfolio. */
+
 .hero-buttons { flex-wrap: wrap; }
 .cv-button { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; padding: .75rem 1.25rem; min-height: 51px; border: 1px solid var(--color-primary); border-radius: 10rem; background: transparent; color: var(--color-text); font: 600 1rem var(--font-inter); white-space: nowrap; transition: background-color .2s; }
 .cv-button:disabled { cursor: not-allowed; opacity: .55; }
@@ -872,7 +859,6 @@ nav a[data-tooltip]:hover::before {
 .cv-button:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 4px; }
 @media (prefers-reduced-motion: reduce) { .cv-button { transition: none; } }
 
-/* Keep both hero actions exactly the same size in either language. */
 .hero-buttons > :is(.button1, .cv-button) {
   box-sizing: border-box;
   flex: 0 0 auto;
@@ -885,6 +871,4 @@ nav a[data-tooltip]:hover::before {
   line-height: 1;
 }
 
-
 @media (prefers-reduced-motion: reduce) { .blog-card__share { transition: none; } }
-

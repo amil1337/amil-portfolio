@@ -1,5 +1,5 @@
 ---
-import { languageFromPath, localPath, ui } from '../lib/i18n';
+import { languageFromPath, ui } from '../lib/i18n';
 import MainLayout from '../layouts/MainLayout.astro';
 import BlogCard from '../components/BlogCard.astro';
 import { postsForLanguage } from '../lib/posts';
@@ -23,7 +23,7 @@ const sortedPosts = await postsForLanguage(lang);
   <section id="projects-exception" class="projects-section" style="padding-bottom: 100px;">
     <div class="container">
       <div class="blog-list-container">
-        {sortedPosts.map((post) => <BlogCard post={post} lang={lang} />)}
+        {sortedPosts.length ? sortedPosts.map((post) => <BlogCard post={post} lang={lang} />) : <p>{labels.noPosts}</p>}
       </div>
     </div>
   </section>

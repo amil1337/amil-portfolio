@@ -37,7 +37,7 @@ const awards = [
           <li class="honor-row" style="align-items: start;">
             <span class="honor-number" style="align-self: start;" aria-hidden="true">0{index + 1}</span>
             <span class:list={["honor-seal", { "div-seal": award.organization === "DIV Academy" }]} style="align-self: start;" aria-hidden="true">
-              {award.logo ? <img class:list={{ 'azercell-logo': award.organization === 'Azercell', 'div-tile-image': award.organization === 'DIV Academy' }} src={award.logo} alt="" width="48" height="48" loading="lazy" /> : <svg viewBox="0 0 40 48" width="36" height="44" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"><path d="m12 29-3 15 11-5 11 5-3-15"/><circle cx="20" cy="19" r="14"/><circle cx="20" cy="19" r="10" stroke-dasharray="1 3"/><path d="m20 12 2 4.5 5 .5-3.7 3.2 1.2 4.8-4.5-2.5-4.5 2.5 1.2-4.8L13 17l5-.5Z"/></svg>}
+              {award.logo ? <img class:list={{ 'div-tile-image': award.organization === 'DIV Academy' }} src={award.logo} alt="" width="48" height="48" loading="lazy" /> : <svg viewBox="0 0 40 48" width="36" height="44" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"><path d="m12 29-3 15 11-5 11 5-3-15"/><circle cx="20" cy="19" r="14"/><circle cx="20" cy="19" r="10" stroke-dasharray="1 3"/><path d="m20 12 2 4.5 5 .5-3.7 3.2 1.2 4.8-4.5-2.5-4.5 2.5 1.2-4.8L13 17l5-.5Z"/></svg>}
             </span>
             <div class="honor-details">
               <h3>{award.title}</h3>
@@ -86,16 +86,14 @@ const awards = [
   .awards-section .honors-archive .archive-label { margin: 0 0 16px; color: var(--color-text-muted); font-size: 11px; font-weight: 400; line-height: 1.4; letter-spacing: .08em; text-transform: uppercase; }
   .education-archive { margin-top: 3.5rem; }
   .honors-archive { margin-top: 3rem; }
-  .honors-preview { border: 1px solid var(--color-border); border-radius: 99px; padding: 4px 10px; letter-spacing: 0; text-transform: none; }
   .honors-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-border); }
   .honor-row { display: grid; grid-template-columns: 24px 48px minmax(0, 1fr); gap: 22px; align-items: start; padding: 26px 8px; border-bottom: 1px solid var(--color-border); transition: background-color .2s; }
   .honor-number { padding-top: 3px; }
   .honor-row:hover { background: var(--color-bg-alt); }
-  .honor-number, .honor-year { font-size: .75rem; color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+  .honor-number { font-size: .75rem; color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
   .honor-seal { width: 48px; height: auto; display: grid; place-items: start center; color: var(--color-text); }
 
   .honor-seal img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
-  .honor-seal img.azercell-logo { border-radius: 8px; padding: 0; }
   .honor-seal.div-seal { height: auto; aspect-ratio: 1; background: #d0e967; border-radius: 8px; overflow: hidden; padding: 0; }
   .honor-seal img.div-tile-image { width: 100%; height: auto; aspect-ratio: 1; background: transparent; border-radius: 8px; padding: 0; border: 0; object-fit: contain; filter: none; }
   .honor-seal img.school-logo { background: transparent; border-radius: 0; padding: 0; border: 0; }
@@ -104,36 +102,6 @@ const awards = [
   .honor-details p { margin: 0; font-size: .875rem; }
   .honor-details .honor-organization { font-style: italic; color: var(--color-text-muted); line-height: 1.6; overflow-wrap: anywhere; }
   .honor-details .honor-description { margin-top: 16px; max-width: 58ch; font-size: .9375rem; font-weight: 400; color: var(--color-text); line-height: 1.5; overflow-wrap: anywhere; }
-  .honor-year { border: 1px solid var(--color-border); border-radius: 99px; padding: 5px 12px; }
   @media (max-width: 540px) { .honor-row { grid-template-columns: 36px minmax(0, 1fr); gap: 12px; padding: 22px 0; } .honor-number { display: none; } .honor-seal { width: 36px; } .honor-details h3 { font-size: 1rem; } .honor-details p { font-size: .8rem; } }
   @media (prefers-reduced-motion: reduce) { .honor-row { transition: none; } }
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
